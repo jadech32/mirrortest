@@ -6,6 +6,12 @@
   "scripts": {
     "start": "electron main.js"
   },
+  "dependencies": {
+  "electron-prebuilt": "^1.4.6"
+  },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/jadech32/mirrortest"
 }
