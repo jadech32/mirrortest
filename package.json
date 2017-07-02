@@ -7,12 +7,15 @@
     "start": "electron main.js"
   },
   "dependencies": {
-  "electron-prebuilt": "^1.4.6"
+    "electron-prebuilt": "^1.4.6"
   },
   "author": "",
   "license": "ISC",
   "repository": {
-  "type": "git",
-  "url": "https://github.com/jadech32/mirrortest"
+    "type": "git",
+    "url": "https://github.com/jadech32/mirrortest"
+  },
+  "devDependencies": {
+    "jquery": "^3.2.1"
   }
 }

@@ -1,18 +1,11 @@
 const request = require('request').defaults({
     timeout: 10000,
 });
-const cheerio = require('cheerio');
-const parseUrl = require("parse-url")
-const parseString = require('xml2js').parseString
 var fs = require('fs')
-var config = fs.readFileSync('./config/config.json');
+var config = fs.readFileSync('config/config.json');
 config = JSON.parse(config)
-
+var $ = require('jquery')
 // FUNCTIONS //
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 function renderTime() {
     var mydate = new Date();
@@ -134,24 +127,49 @@ function show_image(src, width, height, alt) {
         document.getElementById("img").appendChild(img);
 }
 
-function newsAPI(){
-  for(i = 0; i<config['newsapi']['sources'].length;i++) {
-    document.getElementById('news_icon').src="img/news/" + config['newsapi']['sources'][i] + ".png";
-    request({
-      url: 'https://newsapi.org/v1/articles?source=' + config['newsapi']['sources'][i] + '&sortBy=top&apiKey=' + config['newsapi']['api_key'],
-      method: 'get'
-    }, function (err, res, body){
-      var parsedbody = JSON.parse(body)
-      parsedbody = parsedbody['articles'];
-      document.getElementById('news_1').innerHTML = parsedbody[0]['title'];
-      document.getElementById('news_2').innerHTML = parsedbody[1]['title'];
-      document.getElementById('news_3').innerHTML = parsedbody[2]['title'];
-      document.getElementById('news_4').innerHTML = parsedbody[3]['title'];
-      document.getElementById('news_5').innerHTML = parsedbody[4]['title'];
+function newspap(i) {
 
-    })
-      sleep(10000);
-  }
+    request({
+        url: 'https://newsapi.org/v1/articles?source=' + config['newsapi']['sources'][i] + '&sortBy=top&apiKey=' + config['newsapi']['api_key'],
+        method: 'get'
+        }, function (err, res, body){
+            var parsedbody = JSON.parse(body)
+            parsedbody = parsedbody['articles'];
+            $('#news_1').fadeOut('fast', function(){
+              $('#news_1').html(parsedbody[0]['title'])
+              setTimeout(function() { $('#news_1').fadeIn('fast');}, 200);
+            })
+            $('#news_2').fadeOut('fast', function(){
+              $('#news_2').html(parsedbody[1]['title'])
+              setTimeout(function() { $('#news_2').fadeIn('fast');}, 200);
+            })
+            $('#news_3').fadeOut('fast', function(){
+              $('#news_3').html(parsedbody[2]['title'])
+              setTimeout(function() { $('#news_3').fadeIn('fast');}, 200);
+            })
+            $('#news_4').fadeOut('fast', function(){
+              $('#news_4').html(parsedbody[3]['title'])
+              setTimeout(function() { $('#news_4').fadeIn('fast');}, 200);
+            })
+            $('#news_5').fadeOut('fast', function(){
+              $('#news_5').html(parsedbody[4]['title'])
+              setTimeout(function() { $('#news_5').fadeIn('fast');}, 200);
+            })
+            $('#news_icon').fadeOut('fast', function(){
+              $('#news_icon').attr('src', "img/news/" + config['newsapi']['sources'][i] + ".png")
+              setTimeout(function() { $('#news_icon').fadeIn('fast');}, 200);
+            })
+        });
+
+}
+
+function newsAPI() {
+    for(var i = 0; i<config['newsapi']['sources'].length; i++) {
+        setTimeout(newspap, config['newsapi']['interval'] * 60 * 1000 * i, i);
+        if(i+1 == config['newsapi']['sources'].length) {
+          setTimeout(newsAPI, 20000 * i);
+        }
+    }
 }
 
 function todoistAPI(){
@@ -220,17 +238,19 @@ function currencyExchange(){
     var result = Object.keys(parsedbody)
     console.log(result[0])
     console.log(parsedbody[result[0]])
-
-
-
   })
 }
 
 function render() {
+  var i = 0;
+  while(i == 0) {
+    newsAPI(); // Calls itself
+    currencyExchange();
+    i = 1;
+  }
   setInterval(renderTime, 1000)
   setTimeout(renderWeather, 30000)
-  setInterval(newsAPI , 5000)
+  //setInterval(newsAPI, 5000*(config['newsapi']['sources'].length + 1))
   setInterval(todoistAPI, 1400)
   setInterval(currencyExchange, 1500)
 }
-newsAPI()
