@@ -1,15 +1,15 @@
 {
   "wunderground": {
-    "api_key": "7ef8fc32acd04dd5",
+    "api_key": "",
     "state_country": "Canada",
     "city": "Vancouver"
   },
   "newsapi": {
-    "api_key": "5e21692aad7e4a1ab795d533643d0737",
+    "api_key": "",
     "sources": ["al-jazeera-english", "bbc-news", "the-new-york-times"]
   },
   "todoist": {
-    "api_key": "28f5647549f28006bee8deb764a00bcc44224fed"
+    "api_key": ""
   }
 
 }
