@@ -40,7 +40,7 @@
 .image {
   height: 72px;
   width: 72px;
-  padding-left: 170px;
+  padding-left: 200px;
   position: absolute;
   top: 38px;
 
@@ -51,12 +51,14 @@
   font-family: ".SFNSText-Light",".SFUIText-Light",".HelveticaNeueDeskInterface-Light","HelveticaNeue","Segoe UI","Roboto","Arial","Apple Color Emoji",sans-serif;
   padding-left: 40px;
   padding-bottom: 10px;
+  width: 50%;
+  margin-right: 800px;
 }
 
 .news_head {
   position: relative;
   width: 450px;
-  padding-left: 40px;
+  padding-left: 30px;
   margin-top: 30px;
 }
 
@@ -72,4 +74,21 @@
   font-family: ".SFNSText-Light",".SFUIText-Light",".HelveticaNeueDeskInterface-Light","HelveticaNeue","Segoe UI","Roboto","Arial","Apple Color Emoji",sans-serif;
   padding-left: 40px;
   padding-bottom: 10px;
+}
+
+.crypto {
+  font-size:14px;
+  font-family: ".SFNSText-Light",".SFUIText-Light",".HelveticaNeueDeskInterface-Light","HelveticaNeue","Segoe UI","Roboto","Arial","Apple Color Emoji",sans-serif;
+}
+
+.crypto_up {
+  color: #09dd09;
+  font-size:14px;
+  font-family: ".SFNSText-Light",".SFUIText-Light",".HelveticaNeueDeskInterface-Light","HelveticaNeue","Segoe UI","Roboto","Arial","Apple Color Emoji",sans-serif;
+}
+
+.crypto_down {
+  color: #f00;
+  font-size:14px;
+  font-family: ".SFNSText-Light",".SFUIText-Light",".HelveticaNeueDeskInterface-Light","HelveticaNeue","Segoe UI","Roboto","Arial","Apple Color Emoji",sans-serif;
 }
