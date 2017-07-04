@@ -1,10 +1,14 @@
 const request = require('request').defaults({
     timeout: 10000,
 });
+const cheerio = require('cheerio');
+const parseUrl = require("parse-url")
+const parseString = require('xml2js').parseString
 var fs = require('fs')
 var config = fs.readFileSync('config/config.json');
 config = JSON.parse(config)
 var $ = require('jquery')
+var opn = require('opn')
 // FUNCTIONS //
 
 function renderTime() {
@@ -241,11 +245,61 @@ function currencyExchange(){
   })
 }
 
+function spotifyAPI(token){
+  if(token!=null){
+    var access_token = token
+  } else {
+    var access_token = 'Bearer ' + config['spotify']['access_token']
+  }
+  request.get({
+    url: 'https://api.spotify.com/v1/me/player/currently-playing',
+    headers: {
+      Authorization: access_token
+    }
+  }, function(err, res, body){
+    if(res.statusCode != 200){
+      // If our access code is expired, obtain a new one via refresh code.
+      var formData = {
+        grant_type: 'refresh_token',
+        refresh_token: config['spotify']['refresh_token']
+      }
+
+      // Renew the token
+      request.post({
+        url: 'https://accounts.spotify.com/api/token',
+        headers: {
+          Authorization: 'Basic ' + window.btoa(config['spotify']['client_id']+':'+config['spotify']['client_secret'])
+        },
+        form: formData
+      }, function(err, res, body){
+        var parsedbody = JSON.parse(body)
+        var access_token = 'Bearer ' + parsedbody['access_token']
+        spotifyAPI(access_token) // New token.
+      });
+    } else {
+      var parsedbody = JSON.parse(body)
+      var isPlaying = parsedbody['is_playing']
+      var name = parsedbody['item']['name']
+      var artist = parsedbody['item']['artists'][0]['name']
+
+      if(document.getElementById('spotify').innerHTML != 'Currently Playing: ' + name + ' - ' + artist){
+        $('#spotify').fadeOut('fast', function(){
+          $('#spotify').html('Currently Playing: ' + name + ' - ' + artist)
+          setTimeout(function() { $('#spotify').fadeIn('fast');}, 200);
+        })
+      }
+    }
+    setTimeout(spotifyAPI, 3000, null) // Currently forces it to find a new token if expired previously
+  })
+}
+
+
 function render() {
   var i = 0;
   while(i == 0) {
     newsAPI(); // Calls itself
     currencyExchange();
+    spotifyAPI(null);
     i = 1;
   }
   setInterval(renderTime, 1000)
@@ -254,3 +308,4 @@ function render() {
   setInterval(todoistAPI, 1400)
   setInterval(currencyExchange, 1500)
 }
+spotifyAPI(null)

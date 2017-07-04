@@ -10,6 +10,12 @@
   },
   "todoist": {
     "api_key": ""
-  }
+  },
+  "spotify": {
+    "client_id": "",
+    "client_secret": "",
+    "access_token": "",
+    "refresh_token": ""
+    }
 
 }

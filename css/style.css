@@ -55,11 +55,33 @@
   margin-right: 800px;
 }
 
+.spotify {
+  font-size:14px;
+  font-family: ".SFNSText-Light",".SFUIText-Light",".HelveticaNeueDeskInterface-Light","HelveticaNeue","Segoe UI","Roboto","Arial","Apple Color Emoji",sans-serif;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  padding-bottom: 20px;
+  left: 0;
+  right: 0;
+}
+
+.spotify_icon {
+  width: 50px;
+  height: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  padding-bottom: 35px;
+}
+
 .news_head {
   position: relative;
   width: 450px;
   padding-left: 30px;
   margin-top: 30px;
+  padding-bottom: 5px;
 }
 
 .twitter_logo {
