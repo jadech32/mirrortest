@@ -282,9 +282,16 @@ function spotifyAPI(token){
       var name = parsedbody['item']['name']
       var artist = parsedbody['item']['artists'][0]['name']
 
-      if(document.getElementById('spotify').innerHTML != 'Currently Playing: ' + name + ' - ' + artist){
+      if(isPlaying){
+        if(document.getElementById('spotify').innerHTML != 'Currently Playing: ' + name + ' - ' + artist){
+          $('#spotify').fadeOut('fast', function(){
+            $('#spotify').html('Currently Playing: ' + name + ' - ' + artist)
+            setTimeout(function() { $('#spotify').fadeIn('fast');}, 200);
+          })
+        }
+      } else {
         $('#spotify').fadeOut('fast', function(){
-          $('#spotify').html('Currently Playing: ' + name + ' - ' + artist)
+          $('#spotify').html('')
           setTimeout(function() { $('#spotify').fadeIn('fast');}, 200);
         })
       }
